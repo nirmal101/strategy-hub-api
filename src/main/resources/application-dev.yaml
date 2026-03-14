@@ -1,0 +1,6 @@
+# Local development profile – use when DB schema is managed by Hibernate
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
