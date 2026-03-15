@@ -1,5 +1,7 @@
 package com.strategyhub.creator.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Objects;
 
 /**
@@ -7,7 +9,10 @@ import java.util.Objects;
  */
 public class SocialAccountRequestDTO {
 
+    @NotBlank
     private final String platform;
+
+    @NotBlank
     private final String profileUrl;
 
     public SocialAccountRequestDTO(String platform, String profileUrl) {
