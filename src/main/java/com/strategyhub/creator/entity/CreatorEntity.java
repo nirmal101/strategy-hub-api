@@ -18,7 +18,7 @@ import java.util.UUID;
     name = "creators",
     uniqueConstraints = @UniqueConstraint(columnNames = "email")
 )
-public class Creator {
+public class CreatorEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -46,17 +46,17 @@ public class Creator {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-    protected Creator() {
+    protected CreatorEntity() {
     }
 
-    public Creator(String email, String category, String niche, String stage) {
+    public CreatorEntity(String email, String category, String niche, String stage) {
         this.email = email;
         this.category = category;
         this.niche = niche;
         this.stage = stage;
     }
 
-    public Creator(String email, String category, String niche, String stage, Integer age) {
+    public CreatorEntity(String email, String category, String niche, String stage, Integer age) {
         this.email = email;
         this.category = category;
         this.niche = niche;
