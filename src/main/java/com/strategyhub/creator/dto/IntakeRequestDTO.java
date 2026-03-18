@@ -1,35 +1,79 @@
 package com.strategyhub.creator.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
 import java.util.Objects;
 
 /**
- * DTO representing the full intake payload.
+ * DTO representing the full creator intake payload.
  */
 public class IntakeRequestDTO {
 
     // Creator
+    @NotBlank
+    @Email
     private final String email;
+
+    @NotBlank
     private final String category;
+
+    @NotBlank
     private final String niche;
+
+    @NotBlank
     private final String stage;
+
     private final Integer age;
 
     // CreatorProfile
+    @NotBlank
+    @Size(max = 2000)
     private final String goals12Months;
+
+    @NotBlank
+    @Size(max = 2000)
     private final String dreamOutcome;
+
+    @NotBlank
+    @Size(max = 2000)
     private final String biggestStruggle;
+
+    @NotBlank
+    @Size(max = 2000)
     private final String biggestWin;
+
+    @NotBlank
+    @Size(max = 2000)
     private final String turningPoint;
+
+    @Size(max = 2000)
     private final String additionalInterests;
 
     // CreatorGrowthBlueprint
+    @NotNull
+    @Size(min = 1)
     private final List<String> priorities;
+
+    @NotBlank
     private final String cameraComfort;
+
+    @NotBlank
     private final String postingFrequency;
+
+    @NotNull
+    @Min(0)
     private final Integer totalFollowers;
 
     // Social Accounts
+    @NotNull
+    @Size(min = 1)
+    @Valid
     private final List<SocialAccountRequestDTO> socialAccounts;
 
     public IntakeRequestDTO(
