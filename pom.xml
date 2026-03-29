@@ -11,7 +11,7 @@
 	<groupId>com</groupId>
 	<artifactId>strategy-hub-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>strategy-hub</name>
+	<name>strategy-hub-api</name>
 	<description>A strategy hub for creators</description>
 	<url/>
 	<licenses>
