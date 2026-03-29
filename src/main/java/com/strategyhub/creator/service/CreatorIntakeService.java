@@ -1,6 +1,8 @@
 package com.strategyhub.creator.service;
 
+import com.strategyhub.creator.dto.CreatorResponseDTO;
 import com.strategyhub.creator.dto.IntakeRequestDTO;
+import com.strategyhub.creator.dto.SocialAccountResponseDTO;
 import com.strategyhub.creator.dto.SocialAccountRequestDTO;
 import com.strategyhub.creator.entity.CreatorEntity;
 import com.strategyhub.creator.entity.CreatorGrowthBlueprintEntity;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CreatorIntakeService {
@@ -91,6 +94,43 @@ public class CreatorIntakeService {
         }
 
         return creator.getId();
+    }
+
+    @Transactional(readOnly = true)
+    public CreatorResponseDTO getCreator(UUID creatorId) {
+        CreatorEntity creator = creatorRepository.findById(creatorId)
+                .orElseThrow(() -> new RuntimeException("Creator not found"));
+
+        CreatorProfileEntity profile = creatorProfileRepository.findById(creatorId)
+                .orElseThrow(() -> new RuntimeException("Creator profile not found"));
+
+        CreatorGrowthBlueprintEntity growthBlueprint = creatorGrowthBlueprintRepository.findById(creatorId)
+                .orElseThrow(() -> new RuntimeException("Creator growth blueprint not found"));
+
+        List<CreatorSocialAccountEntity> socialAccounts = creatorSocialAccountRepository.findByCreatorId(creatorId);
+        List<SocialAccountResponseDTO> socialAccountDtos = socialAccounts.stream()
+                .map(sa -> new SocialAccountResponseDTO(sa.getPlatform(), sa.getProfileUrl()))
+                .collect(Collectors.toList());
+
+        return new CreatorResponseDTO(
+                creator.getId(),
+                creator.getEmail(),
+                creator.getCategory(),
+                creator.getNiche(),
+                creator.getStage(),
+                creator.getAge(),
+                profile.getGoals12Months(),
+                profile.getDreamOutcome(),
+                profile.getBiggestStruggle(),
+                profile.getBiggestWin(),
+                profile.getTurningPoint(),
+                profile.getAdditionalInterests(),
+                growthBlueprint.getPriorities(),
+                growthBlueprint.getCameraComfort(),
+                growthBlueprint.getPostingFrequency(),
+                growthBlueprint.getTotalFollowers(),
+                socialAccountDtos
+        );
     }
 
     private void validateRequest(IntakeRequestDTO request) {
